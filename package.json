@@ -1,0 +1,22 @@
+{
+  "name": "Server",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fábio Akira Yoshida",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "~3.8.4",
+    "require": "~0.5.0",
+    "express": "~3.4.7",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "~1.0.8",
+    "connect-mongo": "~0.4.0"
+  }
+}
