@@ -25,11 +25,12 @@ module.exports.list = function (req, res) {
         });
     }
     
-    var page = paginate(User, req, function(pagination) {
-        console.log(pagination.queryOptions);
-        
+    paginate(User, req, function(pagination) {
         User.find({}, {}, pagination.queryOptions, function (err, users) {
-            res.json(MessageSystem.processAction(err, users));
+            
+            pagination.page.list = users;
+            
+            res.json(MessageSystem.processAction(err, pagination.page));
         });    
     });
 }
