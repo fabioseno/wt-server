@@ -1,27 +1,30 @@
-/*global module, require*/
-var passport = require('passport');
+/*global require, console, module*/
+var MessageSystem   = require('../utils/messageSystem'),
+    Session         = require('../models/session'),
+    User         = require('../models/user');
 
 module.exports.login = function (req, res, next) {
     'use strict';
     
-    passport.authenticate('local', function (err, user, info) {
-        if (err) { return next(err); }
+    console.log('login');
+    
+    User.findOne({ email: req.body.email, password: req.body.password }, '-password', function (err, user) {
         
-        if (!user) {
-            //req.logout();
-            return res.send(401);
+        if (err) {
+            MessageSystem.buildErrorResponse(err, res);
         }
-        req.logIn(user, function (err) {
-            if (err) { return next(err); }
-            
-            var result = {
-                user: user,
-                sessionId: 'abc'
-            }
-            
-            return res.send(result);
-        });
-    })(req, res, next);
+        
+        if (user) {
+            Session.remove({ login: req.body.email }, function (err, sessions) {
+                var session = new Session({ login: req.body.email, updateDate: new Date() });
+                
+                session.save(function (err, session) {
+                    res.header('SessionId', session.id);
+                    res.json(user);
+                });
+            });
+        }
+    });
 };
 
 module.exports.logout = function (req, res) {

@@ -4,7 +4,6 @@ var errorBuilder = require('../utils/errorBuilder');
 module.exports.processAction = function (err, data, req, res) {
     'use strict';
     
-    console.log(err);
     if (err) {
         return errorBuilder.http(err);
     }
@@ -14,6 +13,18 @@ module.exports.processAction = function (err, data, req, res) {
     }
     
     return data;
+};
+
+module.exports.buildErrorResponse = function (err, res) {
+    'use strict';
+    
+    res.json(500, errorBuilder.http(err));
+};
+
+module.exports.buildValidationResponse = function (messages, res) {
+    'use strict';
+    
+    res.json(500, { type: 'warning', messages: messages });
 };
 
 module.exports.buildUnauthorizedResponse = function (req, res) {

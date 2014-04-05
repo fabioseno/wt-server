@@ -25,15 +25,14 @@ module.exports.list = function (req, res) {
         });
     }
     
-    paginate(User, req, function(pagination) {
+    paginate(User, req, function (pagination) {
         User.find({}, {}, pagination.queryOptions, function (err, users) {
-            
             pagination.page.list = users;
             
             res.json(MessageSystem.processAction(err, pagination.page));
-        });    
+        });
     });
-}
+};
 
 
 module.exports.get = function (req, res) {
@@ -47,6 +46,11 @@ module.exports.get = function (req, res) {
 module.exports.create = function (req, res) {
     'use strict';
     
+    // validations
+    if (req.validations && req.validations.length > 0) {
+        MessageSystem.buildValidationResponse(req.validations, res);
+    }
+    
     var user = new User(req.body);
     
     user.save(function (err, user) {
@@ -57,7 +61,12 @@ module.exports.create = function (req, res) {
 module.exports.save = function (req, res) {
     'use strict';
     
-    User.findByIdAndUpdate(req.params.id, { name: req.body.name, status: req.body.status }, {}, function (err, user) {
+    // validations
+    if (req.validations && req.validations.length > 0) {
+        MessageSystem.buildValidationResponse(req.validations, res);
+    }
+    
+    User.findByIdAndUpdate(req.params.id, { name: req.body.name, email: req.body.email, status: req.body.status }, {}, function (err, user) {
         res.json(MessageSystem.processAction(err, user));
     });
 };

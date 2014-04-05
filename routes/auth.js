@@ -4,7 +4,7 @@ module.exports = function (app) {
     
     var authController = require('../controllers/auth');
     
-    app.post('/login', authController.login);
+    app.get('/login', authController.login);
     app.get('/myProfile', authController.myProfile);
     app.get('/logout', authController.logout);
     

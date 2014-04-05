@@ -101,9 +101,10 @@ module.exports.http = function (code, msg, data, inner) {
     
     code = code || 500;
     msg = msg || statusCodes['' + code] || 'Unknown error';
-    console.log(msg)
+    
     var err = this.create(msg, data, inner);
     err.status = code;
+    
     return err;
 };
 
