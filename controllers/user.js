@@ -1,31 +1,12 @@
 /*global require, console, module*/
 var MessageSystem   = require('../utils/messageSystem'),
-    User            = require('../models/user');
+    User            = require('../models/user'),
+    Pagination      = require('../utils/pagination');
 
 module.exports.list = function (req, res) {
     'use strict';
     
-    function paginate(model, req, callback) {
-        model.count(req.body.filter, function (err, total) {
-            var totalPages = Math.ceil(total / req.body.options.pageSize),
-                pagination = {
-                    page: {
-                        totalItems: total,
-                        totalPages: totalPages,
-                        currentPage: req.body.options.currentPage
-                    },
-                    queryOptions:  {
-                        sort: {name: 1},
-                        skip: ((req.body.options.currentPage - 1) * totalPages),
-                        limit: req.body.options.pageSize
-                    }
-                };
-            
-            callback(pagination);
-        });
-    }
-    
-    paginate(User, req, function (pagination) {
+    Pagination.paginate(User, req, function (pagination) {
         User.find({}, {}, pagination.queryOptions, function (err, users) {
             pagination.page.list = users;
             
@@ -33,7 +14,6 @@ module.exports.list = function (req, res) {
         });
     });
 };
-
 
 module.exports.get = function (req, res) {
     'use strict';
@@ -50,6 +30,11 @@ module.exports.create = function (req, res) {
     if (req.validations && req.validations.length > 0) {
         MessageSystem.buildValidationResponse(req.validations, res);
     }
+    
+    var shaObj = new jsSHA(req.body.password, "TEXT"),
+        hash = shaObj.getHMAC(req.body.email, "TEXT", "SHA-1", "B64");
+    
+    req.body.password = hash;
     
     var user = new User(req.body);
     

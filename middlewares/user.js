@@ -16,6 +16,10 @@ module.exports.required = function (req, res, next) {
         req.validations.push('Campo e-mail é obrigatório!');
     }
     
+    if (!req.body || !req.body.password) {
+        req.validations.push('Campo senha é obrigatório!');
+    }
+    
     if (!req.body || !req.body.status) {
         req.validations.push('Campo status é obrigatório!');
     }

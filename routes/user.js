@@ -3,8 +3,7 @@ module.exports = function (app) {
     'use strict';
     
     var userController  = require('../controllers/user'),
-        userMiddleware  = require('../middlewares/user'),
-        authenticationMiddleware = require('../middlewares/authentication');
+        userMiddleware  = require('../middlewares/user');
     
     app.post('/users', userController.list);
     app.get('/user/:id', userController.get);

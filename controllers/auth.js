@@ -6,8 +6,6 @@ var MessageSystem   = require('../utils/messageSystem'),
 module.exports.login = function (req, res, next) {
     'use strict';
     
-    console.log('login');
-    
     User.findOne({ email: req.body.email, password: req.body.password }, '-password', function (err, user) {
         
         if (err) {
