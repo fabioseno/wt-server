@@ -1,6 +1,11 @@
 /docs/
+<<<<<<< HEAD
 /lib/
 /node_modules/
+=======
+/node_modules/
+/src/lib/
+>>>>>>> 491f5a786f8d516938e80516dc9839b23ba3b76d
 /tests/coverage/
 /www/
 
