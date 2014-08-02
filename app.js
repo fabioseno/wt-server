@@ -2,7 +2,10 @@
 
 // MODULES
 var express     = require('express');
-var MongoStore  = require('connect-mongo')(express);
+var session     = require('express-session');
+var bodyParser  = require('body-parser');
+var cookieParser  = require('cookie-parser');
+var MongoStore  = require('connect-mongo')(session);
 var app         = express();
 var port        = process.env.PORT || 8080;
 var mongoose    = require('mongoose');
@@ -24,26 +27,9 @@ db.once('open', function () {
 
 
 // CONFIGURATION
-//require('./config/passport')(passport); // pass passport for configuration
-
-app.configure(function () {
-    'use strict';
-    // set up express application
-    app.use(express.logger('dev'));
-    app.use(express.cookieParser()); // read cookies
-    app.use(express.json());
-    
-    // set up passport authentication
-//    app.use(express.session(
-//        {
-//            secret: 'webtree-secret',
-//            store: new MongoStore({ db: db.db })
-//        }
-//    ));
-    //app.use(passport.initialize());
-    //app.use(passport.session()); // persistent login sessions
-});
-
+//app.use(express.logger('dev'));
+app.use(bodyParser.json())
+app.use(cookieParser('')); // read cookies
 
 // ROUTES
 var defaultRoutes   = require('./routes/default')(app);

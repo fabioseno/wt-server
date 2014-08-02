@@ -15,7 +15,7 @@ module.exports.isLoggedIn = function (req, res, next) {
             }
             
             if (!session || (session && new Date().setHours(session.updateDate.getHours() + 3) < new Date())) {
-                res.json(401, { type: 'error', messages: [] });
+                res.status(401).send('Access denied.');
             } else {
                 next();
             }

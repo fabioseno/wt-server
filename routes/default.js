@@ -7,7 +7,7 @@ module.exports = function (app) {
         authenticationMiddleware = require('../middlewares/authentication');
     
     app.all('*', defaultController.all, authenticationMiddleware.isLoggedIn);
+    app.get('/', defaultController.root);
     app.post('/login', authController.login);
-    //app.get('/', defaultController.root);
     //app.get('/logout', authController.logout);
 };

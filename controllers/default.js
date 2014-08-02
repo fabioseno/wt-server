@@ -5,13 +5,12 @@ module.exports.all = function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, SessionId');
     res.header('Access-Control-Expose-Headers', 'SessionId');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     
     next();
 };
 
 module.exports.root = function (req, res) {
     'use strict';
-    
     res.send('ok');
 };

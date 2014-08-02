@@ -1,1 +1,7 @@
-node_modules/
+/docs/
+/node_modules/
+/src/lib/
+/tests/coverage/
+/www/
+
+npm-debug.log
